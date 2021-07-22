@@ -1,0 +1,273 @@
+
+
+.text-crop(@line-height: 1.3, @top-adjustment: 0px, @bottom-adjustment: 0px) {
+    // Configured in Step 1
+    @top-crop: 5;
+    @bottom-crop: 2;
+    @crop-font-size: 14;
+    @crop-line-height: 1;
+
+    // Apply values to calculate em-based margins that work with any font size
+    @dynamic-top-crop: max((@top-crop + (@line-height - @crop-line-height) * (@crop-font-size / 2)), 0) / @crop-font-size;
+    @dynamic-bottom-crop: max((@bottom-crop + (@line-height - @crop-line-height) * (@crop-font-size / 2)), 0) / @crop-font-size;
+
+    // Mixin output
+    line-height: @line-height;
+
+    &::before,
+    &::after {
+        content: '';
+        display: block;
+        height: 0;
+        width: 0;
+    }
+
+    &::before {
+        margin-bottom: calc(unit(-@dynamic-top-crop, em) ~"+" @top-adjustment);
+    }
+
+    &::after {
+        margin-top: calc(unit(-@dynamic-bottom-crop, em) ~"+" @bottom-adjustment);
+    }
+}
+
+
+@color-green: #23C967;
+@color-border-bottom: #E1E3EE;
+@color-error: #EA717F;
+
+form::-webkit-scrollbar {
+  width: 6px;
+  background-color: @color-green;
+}
+
+form::-webkit-scrollbar-track {//addresses the empty space “below” the progress bar
+    background-color: @color-border-bottom
+}
+form::-webkit-scrollbar-thumb {//addresses the draggable scrolling element that resizes depending on the size of the scrollable element
+    background-color: @color-green;
+    width:5px;
+}
+
+
+.App {
+    background-color: #686d86;
+    font-size: 16px;
+    height: 100vh;
+    display: flex;
+    align-content: center;
+}
+.form-container {
+    display: flex;
+    flex-direction: column; 
+    width: 440px;
+    height: 535px;
+    margin: auto;
+    background-color: white;
+    border-radius: 0 50px 50px 50px;
+}
+
+.label-bold {
+    font-weight: 700;
+
+}
+.secured {
+    margin: 11px;
+    font-size: 14px;
+    color: #AFB4CC;
+}
+
+form {
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    p{
+        font-size: 16px;
+        text-align: left;
+        &.label-promo{
+            margin-bottom: 0;
+        }
+    }
+    h2 {
+        margin-top: 4px;
+        font-size: 16px;
+        text-align: left;
+    }
+    li {
+        list-style: none;
+        text-align: left;
+        margin: 32px 0 32px -40px;
+    }
+    height: 370px;
+    margin: 35px 35px 0 35px;
+    position: relative;
+    label{
+        box-sizing: border-box;
+
+        text-align: left;
+        margin: 0px auto;
+        // width: 370px;
+        display: block;
+        input {
+            font-size: 16px;
+            border: none;
+            border-bottom: 1px solid @color-border-bottom;
+            box-sizing: border-box;
+            margin: 16px auto;
+            display: block;
+            width: 370px;
+            &:focus {
+                -moz-focus-outer: none;
+                outline:none;
+            }
+        }
+    }   
+}
+
+.form-list {
+    box-sizing: border-box;
+    overflow: hidden;
+    height: 294px;
+    border: 1px solid  @color-border-bottom;
+    border-radius: 25px;
+    margin: 0;
+    li {
+        display: flex;
+        flex-direction: column;
+        box-sizing: content-box;
+        border-bottom: 1px solid @color-border-bottom;
+        margin: 0;
+        margin-left: -40px;
+        height: 58px;
+        justify-content: center;
+        align-content: center;
+        & p {
+            margin: 5px;
+            margin-left: 50px;
+            &.list-description {
+                font-weight: 400;
+                font-size: 13px;
+                color: #A7A2CB;
+                &.active{
+                    color: @color-green;
+                }
+            }
+            &.list-bold {
+                font-weight: 600;
+                font-size: 16px;
+            }
+        }
+        &::before {
+            content: "";
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            line-height: 10px;
+            margin-left: 15px;
+            border: 1px solid @color-border-bottom;
+            border-radius: 50%;
+        }
+        &.active::after {
+            content: "";
+            width: 12px;
+            height: 12px;
+            position: absolute;
+            line-height: 10px;
+            margin-left: 19px;
+            background: @color-green;
+            border-radius: 50%;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:nth-child(1) {
+            border-radius: 23px 23px 0 0;
+        }
+        &:nth-child(5) {
+            border-bottom: none;
+            border-radius: 0 0 23px 23px;
+        }
+    }
+    li:hover {
+        background-color: #F4F5FA;
+    }
+    input[type=radio] {
+        display: none;   
+    }
+}
+
+
+
+.btn {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+    bottom: 0;
+    border-radius: 15px;
+    border: none;
+    background: @color-green;
+    margin: 0 auto;
+    margin-top: 23px;
+    width: 370px;
+    height: 45px;
+    cursor: pointer;
+    &.error {
+        background: @color-error;
+    }
+}
+
+.spinner {
+    margin-top: 4px;
+    animation: rotating 1s infinite; //iteration-count direction fill-mode;
+}
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+}
+
+.href.green {
+    box-sizing: content-box;
+    // display: inline;
+    // left: 0;
+    font-size: 18px;
+    padding: 0;
+    line-height: 18px;
+    font-weight: 700;
+    width: 190px;
+    height: 18px;
+    text-align: left;
+    color: @color-green;
+    border: none;
+    // height: 18px;
+    background: transparent;
+    cursor: pointer;
+
+}
+
+.icon-add-45deg {
+    transform: rotate(45deg);
+    // width: 14px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.no-border {
+    height: 14px;
+    background: transparent;
+    border: none;
+}
+.icon {
+    width: 10px;
+    height: 14px;
+    transform: translateY(1px);
+}
+
+.invalid {
+    border-bottom: 1px solid @color-error;
+}
