@@ -1,11 +1,12 @@
 import imgSuccess from '../img/payment-success.png'
 import imgError from '../img/payment-error.png'
+import addIcon from '../img/icon-add.svg'
 import { useContext, useCallback, useEffect, useState, isValidElement } from 'react';
 import FormContext from './FormContext'
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../store/actionCreators/actionCreators.js';
 import spinner from '../img/spinner.png';
-// import selectProduct from '../store/actionCreators/selectProduct';
+import iconLock from '../img/lock.png';
 import validator from 'validator'
 
 /**
@@ -78,20 +79,23 @@ function PaymentError() {
     )
 }
 
-
+/**
+ * Главная страница. Cумма на кнопке рассчитывается в зависимости от количества выбранных товаров.
+ * Описание товара сохраняется, если количество товаров увеличивается на следующем экране
+ * @returns jsx
+ * 
+ */
 function DefaultForm() {
     const context = useContext(FormContext)
     const store = context.getState()
     const products = store.products;
-    // console.log(products)
     const i = products.selectedProducts.length - 1;
     const price = products.all.reverse()[i].price
-
 
     const isLoading = useSelector((state)=>state.isLoading)
 
     const [selected, setSelected] = useState(products.selectedProducts);
-    const [emailError, setEmailError] = useState(store.errors);
+    const [emailError, setEmailError] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -99,7 +103,7 @@ function DefaultForm() {
         ()=>{
             setEmailError(emailError)
             setSelected(selected)   
-        }, [products, store.errors]
+        }, [products, store.errors, emailError]
     )
 
     const handleSubmitPay = useCallback((e) => {
@@ -129,22 +133,34 @@ function DefaultForm() {
         dispatch(actions.editProductLink({id, link}))
     }
 
-    const handleEmailChange = async (e) => {
+    const handleEmailChange = (e) => {
         if (!validator.isEmail(e.target.value)) { 
-            // console.log('error!',store.errors)
-            await dispatch(actions.addError('Email is invalid'))
+            setEmailError('Email is invalid')
+            dispatch(actions.addError('Email is invalid'))
         } else {
-            await dispatch(actions.editEmail(e.target.value))
-            await dispatch(actions.clearErrors)
+            setEmailError(null)
+            dispatch(actions.editEmail(e.target.value))
+            dispatch(actions.clearErrors)
         }
-        console.log(store.email)
-        console.log('error:',store.errors)
     }
 
     const productsList = products.selectedProducts.map(prod =>{
         return(
             <li key={prod.id}>
-                <p className="label-bold">{prod.name}</p>
+                <p className="label-bold">{prod.name} 
+                    {products.selectedProducts.length > 1 ?
+                    (<button 
+                        className="no-border"
+                        onClick={(e)=> {
+                            e.preventDefault();
+                            dispatch(actions.deleteProduct(prod.id))
+                            const newSelected = [...selected].filter(el => el.id != prod.id);
+                            setSelected(newSelected)
+                        }}
+                    ><img src={addIcon} className="icon-add-45deg" alt=""/>
+                    </button>) : ''
+                }
+                </p>
                 <label>
                     Enter main keyword for the product
                 <input 
@@ -176,12 +192,10 @@ function DefaultForm() {
                 <label>
                 Enter your email address
                     <input 
-                        // value={store.email}
                         type="email" 
                         placeholder="team@checkforpatent.com" 
                         onChange={handleEmailChange}
                         className={emailError ? 'invalid' : 'valid'}
-                        // required
                     />
                 </label>
                     <ul>{productsList}</ul>
@@ -190,7 +204,7 @@ function DefaultForm() {
                     className="href green"
                     onClick={()=>dispatch(actions.selectPage('add'))}
                 >
-                    Add more products
+                    Add more products <img src={addIcon} className="icon-add" alt=""/>
                 </button>
                 </label>
                 <p className="label-promo">We offer discount up to 36% for multiple checks</p>
@@ -201,12 +215,16 @@ function DefaultForm() {
                 onClick={handleSubmitPay}>
                 {button}
             </button>
-            <p className="secured">Secure payment with Stripe</p>
+            <p className="secured"><img className="icon" src={iconLock} alt=" " />Secure payment with Stripe</p>
         </div>
     )
 }
 
-
+/**
+ *  Выбор количества товаров
+ * 
+ * @returns jsx
+ */
 function AddProducts () {
     const context = useContext(FormContext)
     const store = context.getState()
@@ -246,16 +264,16 @@ function AddProducts () {
         setCurrentIndex(amount);
     }, [dispatch]);
   
-    const mapped = products.all.reverse().map((prod, i) => {
+    const mapped = [...products.all].reverse().map((prod, i) => {
         return (
-            <li key={prod.pcs} onClick={() => handleSelectProducts(prod.pcs)}>
+            <li className={prod.selected ? 'active': ''} key={prod.pcs} onClick={() => handleSelectProducts(prod.pcs)}>
                 <input 
                     type="radio" 
                     checked={prod.selected} 
                     onChange={() => handleSelectProducts(prod.pcs)}
                 />
                 <p className="list-bold">{prod.name}</p>
-                {prod.desc && <p className="list-">{prod.desc}</p>}
+                {prod.desc && <p className={`list-description ${prod.selected? ' active' : ''}`}>{prod.desc}</p>}
             </li>
         )
     })

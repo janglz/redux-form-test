@@ -64,18 +64,14 @@ export default function products(state = initialState, action) {
         }
     
     case 'DELETE_PRODUCT':
+        //action: id <T> string
+        console.log(newArr)
         return {
             ...state,
-            selectedProducts: state.selectedProducts.filter(el => el.id != action.id),
+            selectedProducts: newArr.filter(el => el.id != action.id),
             //TODO: сделать стравнение строгим
         }
     default:
         return state
     }
 }
-
-// {
-//     id: '1',
-//     keyword: '',
-//     link: '',
-// },
