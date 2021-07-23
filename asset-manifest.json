@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/redux-form-test/static/css/main.07acf60d.chunk.css",
-    "main.js": "/redux-form-test/static/js/main.1bd4e747.chunk.js",
-    "main.js.map": "/redux-form-test/static/js/main.1bd4e747.chunk.js.map",
-    "runtime-main.js": "/redux-form-test/static/js/runtime-main.28b98651.js",
-    "runtime-main.js.map": "/redux-form-test/static/js/runtime-main.28b98651.js.map",
-    "static/js/2.c154d21f.chunk.js": "/redux-form-test/static/js/2.c154d21f.chunk.js",
-    "static/js/2.c154d21f.chunk.js.map": "/redux-form-test/static/js/2.c154d21f.chunk.js.map",
-    "static/js/3.2baf2d93.chunk.js": "/redux-form-test/static/js/3.2baf2d93.chunk.js",
-    "static/js/3.2baf2d93.chunk.js.map": "/redux-form-test/static/js/3.2baf2d93.chunk.js.map",
+    "main.js": "/redux-form-test/static/js/main.236b55f2.chunk.js",
+    "main.js.map": "/redux-form-test/static/js/main.236b55f2.chunk.js.map",
+    "runtime-main.js": "/redux-form-test/static/js/runtime-main.46a4d1d9.js",
+    "runtime-main.js.map": "/redux-form-test/static/js/runtime-main.46a4d1d9.js.map",
+    "static/js/2.1f180c65.chunk.js": "/redux-form-test/static/js/2.1f180c65.chunk.js",
+    "static/js/2.1f180c65.chunk.js.map": "/redux-form-test/static/js/2.1f180c65.chunk.js.map",
+    "static/js/3.f4ae5960.chunk.js": "/redux-form-test/static/js/3.f4ae5960.chunk.js",
+    "static/js/3.f4ae5960.chunk.js.map": "/redux-form-test/static/js/3.f4ae5960.chunk.js.map",
     "index.html": "/redux-form-test/index.html",
     "static/css/main.07acf60d.chunk.css.map": "/redux-form-test/static/css/main.07acf60d.chunk.css.map",
-    "static/js/2.c154d21f.chunk.js.LICENSE.txt": "/redux-form-test/static/js/2.c154d21f.chunk.js.LICENSE.txt",
+    "static/js/2.1f180c65.chunk.js.LICENSE.txt": "/redux-form-test/static/js/2.1f180c65.chunk.js.LICENSE.txt",
     "static/media/icon-add.4c08b377.svg": "/redux-form-test/static/media/icon-add.4c08b377.svg",
     "static/media/payment-error.8b3d8993.png": "/redux-form-test/static/media/payment-error.8b3d8993.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.28b98651.js",
-    "static/js/2.c154d21f.chunk.js",
+    "static/js/runtime-main.46a4d1d9.js",
+    "static/js/2.1f180c65.chunk.js",
     "static/css/main.07acf60d.chunk.css",
-    "static/js/main.1bd4e747.chunk.js"
+    "static/js/main.236b55f2.chunk.js"
   ]
 }
